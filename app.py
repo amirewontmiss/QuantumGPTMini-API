@@ -1,16 +1,22 @@
-from flask import Flask, request, jsonify
+
+from fastapi import FastAPI
+from pydantic import BaseModel
 from src.inference import generate_response
 
-app = Flask(__name__)
+app = FastAPI()
 
-@app.route("/generate", methods=["POST"])
-def generate():
-    data = request.get_json()
-    prompt = data.get("prompt", "")
-    
-    # Generate a response using the inference module
-    response_text = generate_response(prompt)
-    return jsonify({"response": response_text})
+# Optional root route for sanity check
+@app.get("/")
+def root():
+    return {"message": "QuantumGPTMini API is live!"}
 
-if __name__ == "__main__":
-    app.run(debug=True)
+# Define a request body format
+class PromptRequest(BaseModel):
+    prompt: str
+
+# Actual generation route
+@app.post("/generate")
+def generate(prompt_req: PromptRequest):
+    response = generate_response(prompt_req.prompt)
+    return {"response": response}
+
