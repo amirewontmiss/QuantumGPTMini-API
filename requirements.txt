@@ -1,5 +1,7 @@
-Flask==2.2.2
-torch==2.6.0
-PennyLane==0.40.0
-transformers==4.50.3
-numpy==2.0.2
+flask
+torch
+pennylane
+numpy
+uvicorn
+fastapi
+transformers
