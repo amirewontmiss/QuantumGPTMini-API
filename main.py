@@ -11,6 +11,10 @@ from config import MODEL_SAVE_PATH, MAX_SEQ_LENGTH
 # Setup model + tokenizer
 app = FastAPI()
 
+@app.get("/")
+def read_root():
+    return {"message": "Welcome to QuantumGPTMini API!"}
+    
 tokenizer = GPT2Tokenizer.from_pretrained("gpt2")
 tokenizer.pad_token = tokenizer.eos_token
 
